@@ -34,3 +34,11 @@ then use it to install dependencies:
 and finally, run spec examples with
 
     $ bundle exec rspec ./spec
+
+
+
+License
+===================
+
+This test suite is licensed under the MIT license. See LICENSE file in the repository
+root.
