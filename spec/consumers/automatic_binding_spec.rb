@@ -7,8 +7,7 @@ describe "Queue that was bound to default direct exchange thanks to Automatic Mo
   # Environment
   #
 
-  include AMQP::Spec
-  include AMQP::SpecHelper
+  include EventedSpec::AMQPSpec
 
   em_before { AMQP.cleanup_state }
   em_after  { AMQP.cleanup_state }
