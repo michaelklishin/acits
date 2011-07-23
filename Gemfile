@@ -1,15 +1,33 @@
 # encoding: utf-8
 
-source "http://gemcutter.org"
+source :rubygems
 
-gem "amqp"
-gem "eventmachine"
 
-if RUBY_VERSION < "1.9"
-  gem "json"
+# Use local clones if possible.
+# If you want to use your local copy, just symlink it to vendor.
+def custom_gem(name, options = Hash.new)
+  local_path = File.expand_path("../vendor/#{name}", __FILE__)
+  if File.exist?(local_path)
+    gem name, options.merge(:path => local_path).delete_if { |key, _| [:git, :branch].include?(key) }
+  else
+    gem name, options
+  end
 end
 
-group(:test) do
-  gem "rspec", ">=2.0.0"
-  gem "amqp-spec", ">=0.3.8"
+custom_gem "eventmachine"
+custom_gem "amq-client",   :git => "git://github.com/ruby-amqp/amq-client.git",   :branch => "master"
+custom_gem "amq-protocol", :git => "git://github.com/ruby-amqp/amq-protocol.git", :branch => "master"
+
+
+
+group :test do
+  gem "rspec", "~> 2.6.0"
+  gem "rake",  "~> 0.9.2"
+
+  custom_gem "evented-spec", :git => "git://github.com/ruby-amqp/evented-spec.git", :branch => "master"
+  gem "effin_utf8"
+  gem "multi_json"
+
+  gem "json",      :platform => :jruby
+  gem "yajl-ruby", :platform => :ruby_18
 end
