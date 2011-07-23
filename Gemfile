@@ -15,8 +15,9 @@ def custom_gem(name, options = Hash.new)
 end
 
 custom_gem "eventmachine"
-custom_gem "amq-client",   :git => "git://github.com/ruby-amqp/amq-client.git",   :branch => "master"
-custom_gem "amq-protocol", :git => "git://github.com/ruby-amqp/amq-protocol.git", :branch => "master"
+custom_gem "amqp",         :git => "git://github.com/ruby-amqp/amqp.git"
+custom_gem "amq-client",   :git => "git://github.com/ruby-amqp/amq-client.git"
+custom_gem "amq-protocol", :git => "git://github.com/ruby-amqp/amq-protocol.git"
 
 
 
