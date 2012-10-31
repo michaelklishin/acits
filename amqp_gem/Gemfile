@@ -1,0 +1,6 @@
+source :rubygems
+
+gem "amqp"
+gem "json"
+gem "active_support"
+
