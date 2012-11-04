@@ -42,11 +42,14 @@ class CommandHandler:
     print "[exchange.declare] Declaring %s of type %s, durable: %s" % (metadata.headers['name'], body['type'], is_durable)
     self.connection.channel(lambda ch: ch.exchange_declare(exchange_type = body['type'], exchange = metadata.headers['name'], durable = is_durable, auto_delete = is_autodelete))
 
+  def no_op(self, *args):
+    pass
+
   def handle_queue_declare(self, method, metadata, body):
     is_durable    = body.get('durable', False)
     is_autodelete = body.get('auto-delete', False)
     print "[queue.declare] Declaring %s, durable: %s" % (metadata.headers['name'], is_durable)
-    self.connection.channel(lambda ch: ch.queue_declare(queue = metadata.headers['name'], durable = is_durable, auto_delete = is_autodelete))
+    self.connection.channel(lambda ch: ch.queue_declare(self.no_op, metadata.headers['name'], durable = is_durable, auto_delete = is_autodelete))
 
 
 class TestSuite:

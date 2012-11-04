@@ -4,11 +4,10 @@
             [langohr.queue    :as lq]
             [langohr.exchange :as le]
             [com.novemberain.acits.commands :as cmd]
-            [clojure.test :refer :all]))
+            [clojure.test :refer :all]
+            [com.novemberain.acits.shared :refer [clients]]))
 
 (defonce conn (lc/connect))
-
-(def clients ["amqp-gem" "pika"])
 
 ;;
 ;; Tests
