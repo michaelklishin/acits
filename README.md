@@ -8,6 +8,12 @@ It does not mean to be the most comprehensive but covers all the common protocol
 and issues observed over about 4 years of using RabbitMQ with various languages.
 
 
+## Project Maturity
+
+ACITS in its current form is a very young project (started in early November, 2012). As such, expect things to change,
+much more automation to be added over time, more clients included and so on.
+
+
 ## How It Works
 
 There is one *main test suite* that delivers commands to *command handlers* implemented in various languages using
