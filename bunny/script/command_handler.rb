@@ -58,6 +58,3 @@ q.subscribe(:block => true) do |delivery_info, properties, payload|
 
   CommandHandler.handle_command(properties.type, delivery_info, properties, JSON.load(payload))
 end
-# a workaround for a bug in Bunny HEAD, will go
-# away soon.
-q.channel.work_pool.join
