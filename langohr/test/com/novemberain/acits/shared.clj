@@ -1,3 +1,3 @@
 (ns com.novemberain.acits.shared)
 
-(def clients ["amqp-gem" "pika"])
+(def clients ["amqp-gem" "pika" "bunny"])
