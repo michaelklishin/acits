@@ -87,19 +87,23 @@ code_change(_OldVsn, State, _Extra) ->
 handle_command(<<"queue.declare">>, Json, Headers, #state{connection = Connection}) ->
     {ok, Ch} = amqp_connection:open_channel(Connection),
     Durable = proplists:get_value(<<"durable">>, Json),
+    AutoDel = proplists:get_value(<<"auto-delete">>, Json, false),
     QName   = extract_header(<<"name">>, Headers),
     io:format("Declaring a queue, name: ~p, durable: ~p~n", [Durable, QName]),
     #'queue.declare_ok'{} = amqp_channel:call(Ch, #'queue.declare'{queue   = QName,
-                                                                   durable = Durable});
+                                                                   durable = Durable,
+                                                                   auto_delete = AutoDel});
 handle_command(<<"exchange.declare">>, Json, Headers, #state{connection = Connection}) ->
     {ok, Ch} = amqp_connection:open_channel(Connection),
     Durable = proplists:get_value(<<"durable">>, Json),
+    AutoDel = proplists:get_value(<<"auto-delete">>, Json, false),
     EType   = proplists:get_value(<<"type">>, Json),
     EName   = extract_header(<<"name">>, Headers),
     io:format("Declaring an exchange, name: ~p, durable: ~p~n", [Durable, EName]),
     #'exchange.declare_ok'{} = amqp_channel:call(Ch, #'exchange.declare'{exchange = EName,
                                                                          durable  = Durable,
-                                                                         type     = EType}).
+                                                                         type     = EType,
+                                                                         auto_delete = AutoDel}).
 
 extract_header(Name, Headers) ->
     {Name, _, V} = lists:keyfind(Name, 1, Headers),
