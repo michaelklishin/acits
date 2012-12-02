@@ -39,9 +39,25 @@ the main test suite.
 
 Make sure you have JDK 6+ and [Leiningen](http://leiningen.org) installed and available in PATH. Then, from the `langohr` directory:
 
-    lein test
+    CLIENTS="bunny,pika,erlang-amqp-client,amqp-gem" lein test
 
-On the first run, this will cause all dependencies to be downloaded.
+On the first run, this will cause all dependencies to be downloaded. To run the suite for only
+a few clients, simply leave some clients out of the `CLIENTS` env variable value:
+
+    CLIENTS="bunny,pika" lein test
+
+
+### Bunny 0.9+
+
+Make sure you have Ruby (1.9.3 is recommended, 1.8.7 should work as well, JRuby is supported in both modes). Then
+
+    gem install bundler
+
+and from the `bunny` directory:
+
+    bundle install
+    ./script/command_handler.rb
+
 
 
 ### amqp gem
@@ -66,6 +82,13 @@ and from the `pika` directory:
 
     python ./script/command_handler.py
 
+
+### Erlang Client
+
+Make sure you have Erlang/OTP R15B02+ and Rebar installed. Then, from the `erlang` directory:
+
+    rebar get-deps
+    ./run.sh
 
 
 
