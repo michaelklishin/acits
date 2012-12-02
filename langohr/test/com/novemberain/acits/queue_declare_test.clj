@@ -16,6 +16,7 @@
 (deftest test-durable-queue-declaration
   (let [ch (lch/open conn)]
     (doseq [c clients]
+      (println (format "Running durable queue declaration test for client %s" c))
       (cmd/queue-declare ch c "acits.queue.durable" {:durable true})
       (Thread/sleep 300)
       (lq/declare-passive ch "acits.queue.durable"))))
@@ -24,6 +25,7 @@
 (deftest test-non-durable-queue-declaration
   (let [ch (lch/open conn)]
     (doseq [c clients]
+      (println (format "Running non-durable queue declaration test for client %s" c))
       (cmd/queue-declare ch c "acits.queue.non-durable" {:durable false})
       (Thread/sleep 300)
       (lq/declare-passive ch "acits.queue.non-durable"))))

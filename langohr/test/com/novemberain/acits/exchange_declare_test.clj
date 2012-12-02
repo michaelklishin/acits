@@ -16,6 +16,7 @@
 (deftest test-durable-exchange-declaration
   (let [ch (lch/open conn)]
     (doseq [c clients]
+      (println (format "Running durable exchange declaration test for client %s" c))
       (cmd/exchange-declare ch c "acits.direct.durable"  {:durable true :type "direct"})
       (cmd/exchange-declare ch c "acits.fanout.durable"  {:durable true :type "fanout"})
       (cmd/exchange-declare ch c "acits.topic.durable"   {:durable true :type "topic"})
@@ -30,6 +31,7 @@
 (deftest test-non-durable-exchange-declaration
   (let [ch (lch/open conn)]
     (doseq [c clients]
+      (println (format "Running non-durable exchange declaration test for client %s" c))
       (cmd/exchange-declare ch c "acits.direct.non-durable"  {:durable false :type "direct"})
       (cmd/exchange-declare ch c "acits.fanout.non-durable"  {:durable false :type "fanout"})
       (cmd/exchange-declare ch c "acits.topic.non-durable"   {:durable false :type "topic"})
@@ -44,6 +46,7 @@
 (deftest test-autodelete-exchange-declaration
   (let [ch (lch/open conn)]
     (doseq [c clients]
+      (println (format "Running auto-delete exchange declaration test for client %s" c))
       (cmd/exchange-declare ch c "acits.direct.autodelete"  {:auto-delete true :type "direct"})
       (cmd/exchange-declare ch c "acits.fanout.autodelete"  {:auto-delete true :type "fanout"})
       (cmd/exchange-declare ch c "acits.topic.autodelete"   {:auto-delete true :type "topic"})

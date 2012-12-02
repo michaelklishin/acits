@@ -1,3 +1,7 @@
-(ns com.novemberain.acits.shared)
+(ns com.novemberain.acits.shared
+  (:require [clojure.string :as s]))
 
-(def clients ["amqp-gem" "pika" "bunny"])
+;; Known options are:
+;; "amqp-gem", "pika", "bunny", "erlang-amqp-client"
+(def clients (s/split (or (System/getenv "CLIENTS")
+                          ""), #","))
