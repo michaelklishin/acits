@@ -1,0 +1,9 @@
+{application, acits,
+ [{description, "AMQP 0.9.1 interoperability test suite"},
+  {vsn, "1"},
+  {modules, [acits, acits_app, acits_sup, acits_handlers]},
+  {registered, []},
+  {applications, [kernel, stdlib, amqp_client]},
+  {mod, {acits_app, []}},
+  {env, []}
+ ]}.
