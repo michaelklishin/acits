@@ -27,6 +27,16 @@ class CommandHandler
   end
 
 
+  def self.queue_bind(delivery_info, properties, payload)
+    opts = payload.symbolize_keys
+
+    self.connection.with_channel do |ch|
+      puts "[queue.bind] Binding #{properties.headers['queue']} to #{properties.headers['exchange']} with routing key #{properties.headers['routing_key']}"
+      ch.queue(properties.headers['queue'], :auto_delete => true).bind(properties.headers['exchange'], :routing_key => opts[:routing_key])
+    end
+  end
+
+
   def self.handle_command(cmd, metadata, payload)
     case cmd
     when "exchange.declare" then
