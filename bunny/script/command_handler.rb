@@ -24,11 +24,22 @@ class CommandHandler
 
   def self.queue_declare(delivery_info, properties, payload)
     opts = payload.symbolize_keys
+
     self.connection.with_channel do |ch|
       puts "[queue.declare] Declaring #{properties.headers['name']}, durable: #{opts[:durable]}, auto-delete: #{opts[:'auto-delete']}"
       ch.queue(properties.headers["name"], :durable => opts[:durable], :auto_delete => opts[:'auto-delete'])
     end
   end
+
+  def self.queue_bind(delivery_info, properties, payload)
+    opts = payload.symbolize_keys
+
+    self.connection.with_channel do |ch|
+      puts "[queue.bind] Binding #{properties.headers['queue']} to #{properties.headers['exchange']} with routing key #{properties.headers['routing_key']}"
+      ch.queue(properties.headers['queue'], :auto_delete => true).bind(properties.headers['exchange'], :routing_key => opts[:routing_key])
+    end
+  end
+
 
   def self.handle_command(cmd, delivery_info, properties, payload)
     case cmd

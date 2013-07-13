@@ -26,3 +26,10 @@
   (lb/publish ch commands-exchange (format "commands.%s" client) (json/encode props)
               :type "queue.declare"
               :headers {"name" name}))
+
+(defn queue-bind
+  "Instructs the given client to declare a queue"
+  [^Channel ch ^String client ^String q ^String x props]
+  (lb/publish ch commands-exchange (format "commands.%s" client) (json/encode props)
+              :type "queue.bind"
+              :headers {"queue" q "exchange" x}))
