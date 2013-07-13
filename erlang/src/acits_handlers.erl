@@ -103,8 +103,19 @@ handle_command(<<"exchange.declare">>, Json, Headers, #state{connection = Connec
     #'exchange.declare_ok'{} = amqp_channel:call(Ch, #'exchange.declare'{exchange = EName,
                                                                          durable  = Durable,
                                                                          type     = EType,
-                                                                         auto_delete = AutoDel}).
-
+                                                                         auto_delete = AutoDel});
+handle_command(<<"queue.bind">>, Json, Headers, #state{connection = Connection}) ->
+    {ok, Ch} = amqp_connection:open_channel(Connection),
+    Q = extract_header(<<"queue">>, Headers),
+    #'queue.declare_ok'{} = amqp_channel:call(Ch, #'queue.declare'{queue   = Q,
+								   durable = false,
+								    auto_delete = true}),
+    E = extract_header(<<"exchange">>, Headers),
+    K = proplists:get_value(<<"routing_key">>, Json),
+    io:format("Binding queue ~p to exchange ~p with routing key ~p~n", [Q, E, K]),
+    #'queue.bind_ok'{} = amqp_channel:call(Ch, #'queue.bind'{queue = Q,
+							     exchange = E,
+							     routing_key = K}).
 extract_header(Name, Headers) ->
     {Name, _, V} = lists:keyfind(Name, 1, Headers),
     V.
